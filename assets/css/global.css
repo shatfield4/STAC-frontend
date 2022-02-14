@@ -1,0 +1,50 @@
+#app,
+#app div,
+#app a,
+#app span,
+#app table,
+#app thead,
+#app tbody,
+#app tr,
+#app td {
+  font-family: 'Montserrat', sans-serif !important;
+}
+html,
+body {
+  overflow-x: hidden;
+}
+#app {
+  background-color: #000000;
+}
+#app .montserrat--font {
+  font-family: 'FreeSans', sans-serif !important;
+  font-display: swap;
+}
+#app .p-relative {
+  position: relative;
+}
+#app .p-absolute {
+  position: absolute;
+}
+#app .header-padding {
+  padding: 0 70px 0 70px;
+}
+#app .padding-width {
+  padding: 0 60px 0 60px;
+}
+#app .background-gray {
+  background-color: #151515;
+}
+#app .font-size--8 {
+  font-size: 8px;
+}
+#app .font-size--9 {
+  font-size: 9px;
+}
+#app .font-size--18 {
+  font-size: 18px;
+}
+#app .outlined--container {
+  border: 1px #999999 solid;
+  background-color: transparent;
+}
