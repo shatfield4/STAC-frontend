@@ -367,7 +367,7 @@ export default class Minting extends Vue {
   }
 
   get mintUnit(): string {
-    return this.baconTotalSupply >= this.paidTokens ? 'GREASE' : 'ETH'
+    return this.baconTotalSupply >= this.paidTokens ? 'TOKE' : 'ETH'
   }
 
   get totalCalculatedMintPrice(): number {
