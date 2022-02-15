@@ -12,7 +12,7 @@ const APP_NAME = 'Stoned Apes vs Fed Apes | STAC'
 const APP_DESCRIPTION =
   'Stoned Apes vs Fed Apes game is based on the popular wolf.game with unique mechanics.'
 const APP_URL = 'https://stonedapeclub.com'
-const API_URL = 'http://128.199.2.204'
+const API_URL = 'https://test.stonedapeclub.com'
 
 export default {
   ssr: false,
