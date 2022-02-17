@@ -100,7 +100,7 @@
                 class="lite_gray--text"
                 :class="$vuetify.breakpoint.xsOnly ? 'caption' : 'body-2'"
               >
-                FED APES ARRESTED:
+                FED APES STOLEN:
               </h1>
               <v-spacer />
               <h2 class="font-size--18">
