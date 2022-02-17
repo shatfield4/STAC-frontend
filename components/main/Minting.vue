@@ -315,7 +315,7 @@ export default class Minting extends Vue {
   @Prop({ default: 0 }) baconTotalSupply!: number
   @Prop({ default: '' }) walletAddress!: string
 
-  isWLOnly: boolean = true; // CHANGE TO ENABLE PUBLIC
+  isWLOnly: boolean = false; // CHANGE TO ENABLE PUBLIC
 
   firstETHSaleAmount: number = this.isWLOnly ? 0.08 : 0.15
   secondGREASESaleAmount: number = this.$config.debug ? 200 : 20000
@@ -411,7 +411,7 @@ export default class Minting extends Vue {
     ) {
       amount = this.fourthGREASESaleAmount
     }
-    // console.log('Total mint price: ' + amount * this.mintQuantity)
+    console.log('Total mint price: ' + amount * this.mintQuantity)
     return amount * this.mintQuantity
   }
 
@@ -492,62 +492,42 @@ export default class Minting extends Vue {
 
 
       // ENABLE FOR PUBLIC
-      // const tx = await this.$web3
-      //   .getBaconContract()
-      //   .functions.mint(this.mintQuantity, seed, {
-      //     value: ethers.utils.parseEther(
-      //      this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString()
-      //     ),
-      //   })
-
-
-      let proof = ["0xdf0d8b66a8ce732b18db4cf91223997e56370b5aac17c642089d3f02f1bd0a5d","0x9c67036adb863d11db69e6367bdc1d7e6c872bd7af4d68aed7204ea89accdf3e","0x7d2322e7c9c6609210a7745e172029bff36d03f8a1f66c687433dd773835586e","0x5d339667464af1e71219aa22dd709365cf8a1641f8ae6e8b5b9d395a1ba0a535"]
-      console.log(this.walletAddress)
-      let foundWallet = false
-
-      // whitelist
-      for(let i = 0; i <= 1128; i++) {
-        // console.log(whitelist[i].Address)
-        if(this.walletAddress === whitelist[i].Address)
-        {
-          proof = whitelist[i].Proof
-          foundWallet = true
-        }
-      }
-
-      if (!foundWallet) {
-        this.$toast.error('You are not whitelisted.')
-      }
-      console.log(this.totalCalculatedMintPrice.toString())
-
       const tx = await this.$web3
         .getBaconContract()
-        .functions.whitelistMint(this.mintQuantity, 1, seed, proof, {
+        .functions.mint(this.mintQuantity, seed, {
           value: ethers.utils.parseEther(
            this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString()
           ),
         })
 
-        // if (this.isWLOnly){
-        //   // Check if user in wl
-        //   if (true) {
-        //     this.$toast.error('You are not whitelisted.')
-        //     return
-        //   }
-        //     await tx.functions.mint(this.mintQuantity, seed, {
-        //     value: ethers.utils.parseEther(
-        //       this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString()
-        //     ),
-        //   })
-        // }
 
-        // if (!this.isWLOnly){
-        //     await tx.functions.mint(this.mintQuantity, seed, {
-        //     value: ethers.utils.parseEther(
-        //       this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString()
-        //     ),
-        //   })
-        // }
+      // let proof = ["0xdf0d8b66a8ce732b18db4cf91223997e56370b5aac17c642089d3f02f1bd0a5d","0x9c67036adb863d11db69e6367bdc1d7e6c872bd7af4d68aed7204ea89accdf3e","0x7d2322e7c9c6609210a7745e172029bff36d03f8a1f66c687433dd773835586e","0x5d339667464af1e71219aa22dd709365cf8a1641f8ae6e8b5b9d395a1ba0a535"]
+      // console.log(this.walletAddress)
+      // let foundWallet = false
+
+      // // whitelist
+      // for(let i = 0; i <= 1128; i++) {
+      //   // console.log(whitelist[i].Address)
+      //   if(this.walletAddress === whitelist[i].Address)
+      //   {
+      //     proof = whitelist[i].Proof
+      //     foundWallet = true
+      //   }
+      // }
+
+      // if (!foundWallet) {
+      //   this.$toast.error('You are not whitelisted.')
+      // }
+      // // console.log(this.totalCalculatedMintPrice.toString())
+
+      // const tx = await this.$web3
+      //   .getBaconContract()
+      //   .functions.whitelistMint(this.mintQuantity, 1, seed, proof, {
+      //     value: ethers.utils.parseEther(
+      //      this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString()
+      //     ),
+      //   })
+
 
       if (tx.hash.length > 0) {
         this.$toast.info(
