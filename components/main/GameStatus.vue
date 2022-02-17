@@ -115,7 +115,7 @@
                 class="lite_gray--text"
                 :class="$vuetify.breakpoint.xsOnly ? 'caption' : 'body-2'"
               >
-                $TOKE CLAIMED:
+                $TOKE EARNED:
               </h1>
               <v-spacer />
               <h2 class="font-size--18">
