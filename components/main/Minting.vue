@@ -615,8 +615,8 @@ export default class Minting extends Vue {
    */
   incrementMint(): void {
     this.mintQuantity++
-    if (this.mintQuantity > 5) {
-      this.mintQuantity = 5
+    if (this.mintQuantity > 20) {
+      this.mintQuantity = 20
     }
   }
 
