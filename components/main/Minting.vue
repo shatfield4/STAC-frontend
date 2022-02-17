@@ -289,6 +289,7 @@
 <script lang="ts">
 import { ethers } from 'ethers'
 import { Component, Vue, Prop, Watch, namespace } from 'nuxt-property-decorator'
+var whitelist = require("./whitelist.json")
 
 const GLOBAL_STORE = namespace('global')
 
@@ -314,7 +315,9 @@ export default class Minting extends Vue {
   @Prop({ default: 0 }) baconTotalSupply!: number
   @Prop({ default: '' }) walletAddress!: string
 
-  firstETHSaleAmount: number = this.$config.debug ? 0.01 : 0.01
+  isWLOnly: boolean = true; // CHANGE TO ENABLE PUBLIC
+
+  firstETHSaleAmount: number = this.isWLOnly ? 0.08 : 0.15
   secondGREASESaleAmount: number = this.$config.debug ? 200 : 20000
   thirdGREASESaleAmount: number = this.$config.debug ? 400 : 40000
   fourthGREASESaleAmount: number = this.$config.debug ? 800 : 80000
@@ -328,6 +331,7 @@ export default class Minting extends Vue {
   perPage: number = 1
   paidTokens: number = 0 // no risk when claiming
 
+  
   isMinting: boolean = false
   mintDialog: boolean = false
   mintedDialog: boolean = false
@@ -359,6 +363,7 @@ export default class Minting extends Vue {
   }
 
   get isGREASESale(): boolean {
+    console.log(this.baconTotalSupply >= this.paidTokens)
     return this.baconTotalSupply >= this.paidTokens
   }
 
@@ -367,6 +372,10 @@ export default class Minting extends Vue {
   }
 
   get mintUnit(): string {
+    if (this.isWLOnly)
+    {
+      return 'ETH WHITELIST ONLY'
+    }
     return this.baconTotalSupply >= this.paidTokens ? 'TOKE' : 'ETH'
   }
 
@@ -387,6 +396,8 @@ export default class Minting extends Vue {
     } else if (
       this.baconTotalSupply >= 10001 &&
       this.baconTotalSupply <= 20000
+      // this.baconTotalSupply >= 5 &&
+      // this.baconTotalSupply <= 20000
     ) {
       amount = this.secondGREASESaleAmount
     } else if (
@@ -400,7 +411,7 @@ export default class Minting extends Vue {
     ) {
       amount = this.fourthGREASESaleAmount
     }
-
+    // console.log('Total mint price: ' + amount * this.mintQuantity)
     return amount * this.mintQuantity
   }
 
@@ -449,6 +460,16 @@ export default class Minting extends Vue {
       .getBaconContract(true)
       .PAID_TOKENS()
     this.paidTokens = paidTokens.toNumber()
+    console.log("PAID TOKENS: " + this.paidTokens) //works and returns correct amount
+    // const wlBlock: ethers.BigNumber = await this.$web3
+    //   .getBaconContract(true)
+    //   .whitelistStartTime()
+
+    // const currentBlock: ethers.BigNumber = await this.$web3
+    //   .getBlockNumber()
+
+    
+    // console.log("WL BLOCK: " + wlBlock.toString())
   }
 
   /**
@@ -461,20 +482,72 @@ export default class Minting extends Vue {
       this.$toast.error('Please connect your wallet.')
       return
     }
-
+    
     console.log('Mint clicked!')
     this.isMinting = true
 
     try {
       const seed = Math.round(Date.now() / 1000)
+      // console.log($web3.utils.toChecksumAddress(this.walletAddress))
+
+
+      // ENABLE FOR PUBLIC
+      // const tx = await this.$web3
+      //   .getBaconContract()
+      //   .functions.mint(this.mintQuantity, seed, {
+      //     value: ethers.utils.parseEther(
+      //      this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString()
+      //     ),
+      //   })
+
+
+      let proof = ["0xdf0d8b66a8ce732b18db4cf91223997e56370b5aac17c642089d3f02f1bd0a5d","0x9c67036adb863d11db69e6367bdc1d7e6c872bd7af4d68aed7204ea89accdf3e","0x7d2322e7c9c6609210a7745e172029bff36d03f8a1f66c687433dd773835586e","0x5d339667464af1e71219aa22dd709365cf8a1641f8ae6e8b5b9d395a1ba0a535"]
+      console.log(this.walletAddress)
+      let foundWallet = false
+
+      // whitelist
+      for(let i = 0; i < 1128; i++) {
+        // console.log(whitelist[i].Address)
+        if(this.walletAddress === whitelist[i].Address)
+        {
+          proof = whitelist[i].Proof
+          foundWallet = true
+        }
+      }
+
+      if (!foundWallet) {
+        this.$toast.error('You are not whitelisted.')
+      }
+      console.log(this.totalCalculatedMintPrice.toString())
 
       const tx = await this.$web3
         .getBaconContract()
-        .functions.mint(this.mintQuantity, seed, {
+        .functions.whitelistMint(this.mintQuantity, 1, seed, proof, {
           value: ethers.utils.parseEther(
-            this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString()
+           this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString()
           ),
         })
+
+        // if (this.isWLOnly){
+        //   // Check if user in wl
+        //   if (true) {
+        //     this.$toast.error('You are not whitelisted.')
+        //     return
+        //   }
+        //     await tx.functions.mint(this.mintQuantity, seed, {
+        //     value: ethers.utils.parseEther(
+        //       this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString()
+        //     ),
+        //   })
+        // }
+
+        // if (!this.isWLOnly){
+        //     await tx.functions.mint(this.mintQuantity, seed, {
+        //     value: ethers.utils.parseEther(
+        //       this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString()
+        //     ),
+        //   })
+        // }
 
       if (tx.hash.length > 0) {
         this.$toast.info(

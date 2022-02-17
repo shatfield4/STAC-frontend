@@ -358,7 +358,7 @@ export default class ConnectWallet extends Vue {
         // switch to testnet bsc
         await (window as any).ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x4' }], // write the chainId here
+          params: [{ chainId: '0x1' }], // write the chainId here
         })
       } catch (error) {
         // add network to metamask (remove if metamask default networks)
@@ -383,7 +383,7 @@ export default class ConnectWallet extends Vue {
         // switch to mainnet ethereum
         await (window as any).ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x4' }], // write the chainId here
+          params: [{ chainId: '0x1' }], // write the chainId here
         })
       } catch (error) {
         const { message } = error as Error

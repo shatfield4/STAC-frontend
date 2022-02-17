@@ -1,5 +1,5 @@
 export const StagingGREASEContractAddress =
-  '0xbee0a63Ef6Dba4185AC16d59D8CF4729ac79186a'
+  '0xDC5cc936595d71C3C40001F96868cdE92C41b21A'
 export const StagingGREASEContractABI = [
   { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
   {

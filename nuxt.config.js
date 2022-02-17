@@ -8,11 +8,12 @@ import {
 } from './contracts/staging'
 
 const DEBUG = process.env.NODE_ENV !== 'production'
+const PROD = false
 const APP_NAME = 'Stoned Apes vs Fed Apes | STAC'
 const APP_DESCRIPTION =
   'Stoned Apes vs Fed Apes game is based on the popular wolf.game with unique mechanics.'
 const APP_URL = 'https://stonedapeclub.com'
-const API_URL = 'https://test.stonedapeclub.com'
+const API_URL = 'https://api.stonedapeclub.com'
 
 export default {
   ssr: false,
@@ -124,9 +125,9 @@ export default {
   publicRuntimeConfig: {
     appName: APP_NAME,
     apiUrl: API_URL,
-    debug: DEBUG,
+    debug: PROD,
     web3JsonRPC:
-      'https://rinkeby.infura.io/v3/7b050d0db39f444e849f866cfac6c585',
+      'https://mainnet.infura.io/v3/7b050d0db39f444e849f866cfac6c585',
     // contract addresses
     baconContractAddress: StagingBaconContractAddress,
     greaseContractAddress: StagingGREASEContractAddress,

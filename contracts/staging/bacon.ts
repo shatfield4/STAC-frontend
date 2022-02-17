@@ -1,5 +1,5 @@
 export const StagingBaconContractAddress =
-  '0x1b82ad5fe6420Ee7A98baE9835a34e705b8F10e7'
+  '0x47b513D33D6E2B6F071b09CFbd7F4eDfF29CE07A'
 export const StagingBaconContractABI = [
   { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
   {
