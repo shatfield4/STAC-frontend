@@ -506,7 +506,7 @@ export default class Minting extends Vue {
       let foundWallet = false
 
       // whitelist
-      for(let i = 0; i < 1128; i++) {
+      for(let i = 0; i <= 1128; i++) {
         // console.log(whitelist[i].Address)
         if(this.walletAddress === whitelist[i].Address)
         {
