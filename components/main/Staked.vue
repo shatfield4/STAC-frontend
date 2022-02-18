@@ -772,6 +772,8 @@ export default class Staked extends Vue {
 
       if (message.includes('denied')) {
         this.$toast.error('You cancelled the transaction.')
+      } else if(message.includes('stake.value < MINIMUM_TO_EXIT')) {
+        this.$toast.error('[Error] You must have at least 2 days worth of $TOKE to unstake')
       } else {
         this.$toast.error(
           '[Error] Something went wrong while processing request'
