@@ -546,6 +546,8 @@ export default class Minting extends Vue {
 
       if (message.includes('denied')) {
         this.$toast.error('You cancelled the transaction.')
+      } else if (message.includes('insufficient')){
+        this.$toast.error('[Error] Insufficient balance')
       } else if (
         (error as MetamaskErrorInterface).data.message.includes(
           'burn amount exceeds balance'
