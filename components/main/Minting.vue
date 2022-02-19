@@ -516,7 +516,7 @@ export default class Minting extends Vue {
           value: ethers.utils.parseEther(
            this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString(),
           ),
-          gasLimit: "300000",
+          // gasLimit: "300000",
           // maxFeePerGas: "100000000000",
           // maxPriorityFeePerGas: "25000000000",
         })
