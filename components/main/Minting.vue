@@ -490,14 +490,35 @@ export default class Minting extends Vue {
       const seed = Math.round(Date.now() / 1000)
       // console.log($web3.utils.toChecksumAddress(this.walletAddress))
 
+      // let gas = this.$web3.getBaconContract().estimateGas.mint(this.mintQuantity, seed, {
+      //     value: ethers.utils.parseEther(
+      //      this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString()
+      //     ),
+      //   }).then((value) => {
+      //     console.log(value)
+      //   })
+
+      // let gasPrice = await ethers.getDefaultProvider().getGasPrice().then((gas) => {
+      //   ethers.utils.formatUnits(gas, "gwei")
+      //   console.log(gas)
+      // })
+      // { BigNumber: "180336311245" }
+
+      // ...often this gas price is easier to understand or
+      // display to the user in gwei
+      
+
 
       // ENABLE FOR PUBLIC
       const tx = await this.$web3
         .getBaconContract()
         .functions.mint(this.mintQuantity, seed, {
           value: ethers.utils.parseEther(
-           this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString()
+           this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString(),
           ),
+          gasLimit: "300000",
+          // maxFeePerGas: "100000000000",
+          // maxPriorityFeePerGas: "25000000000",
         })
 
 
