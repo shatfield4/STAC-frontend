@@ -193,7 +193,7 @@
             <h1 class="headline primary--text">SUCCESS!</h1>
           </div>
           <div>
-            <img src="/images/bacon-sample.jpg" width="250" />
+            <img src="/images/staked.gif" width="250" />
           </div>
           <div>
             <h2 class="body-2 lite_gray--text">Your apes have been staked.</h2>

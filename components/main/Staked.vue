@@ -397,7 +397,7 @@
           </div>
           <div>
             <img
-              src="/images/bacon-sample.jpg"
+              src="/images/claim-get-tax.gif"
               :width="$vuetify.breakpoint.xsOnly ? 200 : 250"
             />
           </div>
