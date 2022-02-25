@@ -317,7 +317,7 @@ export default class Minting extends Vue {
 
   isWLOnly: boolean = false; // CHANGE TO ENABLE PUBLIC
 
-  firstETHSaleAmount: number = this.isWLOnly ? 0.08 : 0.08
+  firstETHSaleAmount: number = this.isWLOnly ? 0.15 : 0.15
   secondGREASESaleAmount: number = this.$config.debug ? 200 : 20000
   thirdGREASESaleAmount: number = this.$config.debug ? 400 : 40000
   fourthGREASESaleAmount: number = this.$config.debug ? 800 : 80000
