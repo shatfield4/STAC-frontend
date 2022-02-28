@@ -483,7 +483,7 @@ export default class Minting extends Vue {
       return
     }
     
-    console.log('Mint clicked!')
+    // console.log('Mint clicked!')
     this.isMinting = true
 
     try {

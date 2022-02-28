@@ -137,6 +137,7 @@
 import { ethers } from 'ethers'
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
 
+
 @Component
 export default class GameStatus extends Vue {
   @Prop({ default: '' }) walletAddress!: string

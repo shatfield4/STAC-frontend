@@ -21,6 +21,7 @@ declare module 'vue/types/vue' {
       getWeb3Provider(): ethers.providers.Web3Provider
       getJsonRPCProvider(): ethers.providers.JsonRpcProvider
       getBaconContract(jsonRPCProvider?: boolean): ethers.Contract
+      getBurnGameContract(jsonRPCProvider?: boolean): ethers.Contract
       getGreaseContract(jsonRPCProvider?: boolean): ethers.Contract
       getTheFryingPanContract(jsonRPCProvider?: boolean): ethers.Contract
       initWeb3Provider(
@@ -30,6 +31,12 @@ declare module 'vue/types/vue' {
       ): void
       initJsonRPCProvider(provider: string): void
       initBaconContract(
+        address: string,
+        abi: ethers.ContractInterface,
+        web3Signer: ethers.Signer,
+        jsonRPCSigner: ethers.Signer
+      ): void
+      initBurnGameContract(
         address: string,
         abi: ethers.ContractInterface,
         web3Signer: ethers.Signer,

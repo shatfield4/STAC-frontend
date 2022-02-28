@@ -5,9 +5,11 @@ export default (ctx: Context, inject: any): void => {
   let baconContract: ethers.Contract
   let greaseContract: ethers.Contract
   let theFryingPanContract: ethers.Contract
+  let burnGameContract: ethers.Contract
   let baconJsonRPCContract: ethers.Contract
   let greaseJsonRPCContract: ethers.Contract
   let theFryingPanJsonRPCContract: ethers.Contract
+  let burnGameJsonRPCContract: ethers.Contract
   let web3: ethers.providers.Web3Provider
   let web3JsonRPC: ethers.providers.JsonRpcProvider
 
@@ -35,6 +37,9 @@ export default (ctx: Context, inject: any): void => {
      */
     getBaconContract(jsonRPCProvider = false): ethers.Contract {
       return jsonRPCProvider ? baconJsonRPCContract : baconContract
+    },
+    getBurnGameContract(jsonRPCProvider = false): ethers.Contract {
+      return jsonRPCProvider ? burnGameJsonRPCContract : burnGameContract
     },
     /**
      * Get Grease contract instance
@@ -89,6 +94,18 @@ export default (ctx: Context, inject: any): void => {
 
       if (jsonRPCSigner !== undefined) {
         baconJsonRPCContract = new ethers.Contract(address, abi, jsonRPCSigner)
+      }
+    },
+    initBurnGameContract(
+      address: string,
+      abi: ethers.ContractInterface,
+      web3Signer: ethers.Signer,
+      jsonRPCSigner: ethers.Signer
+    ): void {
+      burnGameContract = new ethers.Contract(address, abi, web3Signer)
+
+      if (jsonRPCSigner !== undefined) {
+        burnGameJsonRPCContract = new ethers.Contract(address, abi, jsonRPCSigner)
       }
     },
     /**

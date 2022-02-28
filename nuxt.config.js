@@ -5,6 +5,8 @@ import {
   StagingBaconContractABI,
   StagingGREASEContractABI,
   StagingTheFryingPanContractABI,
+  StagingBurnGameContractAddress,
+  StagingBurnGameContractABI
 } from './contracts/staging'
 
 const DEBUG = process.env.NODE_ENV !== 'production'
@@ -132,10 +134,12 @@ export default {
     baconContractAddress: StagingBaconContractAddress,
     greaseContractAddress: StagingGREASEContractAddress,
     theFryingPanContractAddress: StagingTheFryingPanContractAddress,
+    burnGameContractAddress: StagingBurnGameContractAddress,
     // contract ABI
     baconContractABI: StagingBaconContractABI,
     greaseContractABI: StagingGREASEContractABI,
     theFryingPanContractABI: StagingTheFryingPanContractABI,
+    burnGameContractABI: StagingBurnGameContractABI,
   },
   /**
    * Private runtime configs

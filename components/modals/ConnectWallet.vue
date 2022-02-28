@@ -241,6 +241,7 @@ export default class ConnectWallet extends Vue {
       .getSigner(this.web3_wallet_address)
 
     // initialize contracts
+    
     this.$web3.initBaconContract(
       this.$config.baconContractAddress,
       this.$config.baconContractABI,
@@ -256,6 +257,12 @@ export default class ConnectWallet extends Vue {
     this.$web3.initTheFryingPanContract(
       this.$config.theFryingPanContractAddress,
       this.$config.theFryingPanContractABI,
+      signer,
+      jsonRPCsigner
+    )
+    this.$web3.initBurnGameContract(
+      this.$config.burnGameContractAddress,
+      this.$config.burnGameContractABI,
       signer,
       jsonRPCsigner
     )
