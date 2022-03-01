@@ -54,9 +54,9 @@
           </div>
         </v-col>
               <div class="d-flex flex-row justify-center align-center mt-5">
-        <h1 class="body-2 lite_gray--text">AMOUNT</h1>
+        <h1 class="body-2 lite_gray--text">AMOUNT: </h1>
         <div class="d-flex align-center">
-          <v-btn
+          <!-- <v-btn
             text
             fab
             x-small
@@ -65,11 +65,11 @@
             @click="decrementBurn"
           >
             <img src="/icon/arrow-down.svg" width="14" />
-          </v-btn>
+          </v-btn> -->
           <v-card flat tile color="transparent" width="90">
             <h1 class="font-size--10 text-center">{{ burnAmount.toString() + "K" }}</h1>
           </v-card>
-          <v-btn
+          <!-- <v-btn
             text
             fab
             x-small
@@ -78,7 +78,7 @@
             @click="incrementBurn"
           >
             <img src="/icon/arrow-up.svg" width="14" />
-          </v-btn>
+          </v-btn> -->
         </div>
       </div>
       <div
@@ -153,7 +153,7 @@ export default class CommunityFeature extends Vue {
   global_set_unstaked_list_last_timestamp!: (payload: number) => void
   checkTransactionInterval: NodeJS.Timeout | null = null
   statusInfoInterval: NodeJS.Timeout | null = null
-  burnAmount: number = 20
+  burnAmount: number = 250
   highestBurner: string = "-"
   
 
@@ -187,16 +187,16 @@ export default class CommunityFeature extends Vue {
 
 
   incrementBurn(): void {
-    this.burnAmount += 10
-    if (this.burnAmount > 500) {
-      this.burnAmount = 500
+    this.burnAmount += 250
+    if (this.burnAmount > 250) {
+      this.burnAmount = 250
     }
   }
 
   decrementBurn(): void {
-  this.burnAmount -= 10
-  if (this.burnAmount < 20) {
-    this.burnAmount = 20
+  this.burnAmount -= 250
+  if (this.burnAmount < 250) {
+    this.burnAmount = 250
   }
 }
 
