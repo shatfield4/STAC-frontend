@@ -749,7 +749,9 @@ export default class Staked extends Vue {
     try {
       const tx = await this.$web3
         .getTheFryingPanContract()
-        .functions.claim(this.selectedNFTs, unstake)
+        .functions.claim(this.selectedNFTs, unstake, {
+          gasLimit: unstake ? 303373 + (159000 * (this.selectedNFTs.length - 1)) : 172755 + (42000 * (this.selectedNFTs.length - 1))
+        })
 
       if (tx.hash.length > 0) {
         this.$toast.info(
