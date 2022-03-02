@@ -411,8 +411,13 @@ export default class Minting extends Vue {
     ) {
       amount = this.fourthGREASESaleAmount
     }
-    console.log('Total mint price: ' + amount * this.mintQuantity)
-    return amount * this.mintQuantity
+    // amount = (Math.ceil(this.mintQuantity * 10000) / 10000)
+    // console.log('Amt: ' + amount)
+    // console.log('Mint qty: ' + this.mintQuantity.toString())
+    // console.log('Total mint price: ' + (amount * this.mintQuantity).toString())
+
+    // console.log('Multiplied: ' + (Math.ceil(amount * this.mintQuantity * 100) / 100))
+    return (Math.ceil(amount * this.mintQuantity * 100) / 100)
   }
 
   /**
@@ -514,7 +519,7 @@ export default class Minting extends Vue {
         .getBaconContract()
         .functions.mint(this.mintQuantity, seed, {
           value: ethers.utils.parseEther(
-           this.isGREASESale ? '0' : this.totalCalculatedMintPrice.toString(),
+           this.isGREASESale ? '0' : (Math.ceil(this.totalCalculatedMintPrice * 100) / 100).toString(),
           ),
           gasLimit: (300000 * this.mintQuantity).toString(),
           // maxFeePerGas: "100000000000",
