@@ -50,6 +50,7 @@
 import { ethers } from 'ethers'
 import { Component, Vue, Watch, namespace } from 'nuxt-property-decorator'
 import { GameStatus, Minting, Staked, Unstaked } from '~/components/main'
+import { CommunityFeature } from '~/components/home'
 
 const WEB3_STORE = namespace('web3')
 
@@ -70,6 +71,7 @@ interface carouselSettingsInterface {
     Minting,
     Staked,
     Unstaked,
+    CommunityFeature,
   },
 })
 export default class MintStakeAndUnstake extends Vue {
