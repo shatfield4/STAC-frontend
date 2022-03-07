@@ -21,10 +21,13 @@
           :value="mintedBarPercentage"
         >
           <div v-if="$vuetify.breakpoint.smAndUp">
-            <h1 class="font-size--9 progress-bar--1 pt-2 pl-2">
+            <h1 class="font-size--9 progress-bar">
               {{ firstETHSaleAmount }} ETH
             </h1>
-            <h1 class="font-size--9 progress-bar--2 pt-2">
+            <!-- <h1 class="font-size--9 progress-bar--1 pt-2 pl-2">
+            {{ firstETHSaleAmount }} ETH
+            </h1> -->
+            <!-- <h1 class="font-size--9 progress-bar--2 pt-2">
               {{ secondGREASESaleAmount }} $TOKE
             </h1>
             <h1 class="font-size--9 progress-bar--3 pt-2 pl-2">
@@ -32,13 +35,19 @@
             </h1>
             <h1 class="font-size--9 progress-bar--4 pt-2">
               {{ fourthGREASESaleAmount }} $TOKE
-            </h1>
+            </h1> -->
           </div>
         </v-progress-linear>
 
-        <h1 class="caption lite_gray--text text-right mt-2">
+        <!-- <h1 class="caption lite_gray--text text-right mt-2">
           {{ baconTotalSupply.toLocaleString() }}/{{
             maxBaconSupply.toLocaleString()
+          }}
+          MINTED
+        </h1> -->
+          <h1 class="caption lite_gray--text text-right mt-2">
+          {{ baconTotalSupply.toLocaleString() }}/{{
+            10000
           }}
           MINTED
         </h1>
@@ -368,7 +377,8 @@ export default class Minting extends Vue {
   }
 
   get mintedBarPercentage(): number {
-    return (this.baconTotalSupply / this.maxBaconSupply) * 100
+    return (this.baconTotalSupply / 10000) * 100
+    // return (this.baconTotalSupply / this.maxBaconSupply) * 100
   }
 
   get mintUnit(): string {
