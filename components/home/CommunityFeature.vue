@@ -9,7 +9,7 @@
           flat
           tile
           :max-width="$vuetify.breakpoint.mdAndDown ? '100%' : '561'"
-          height="350"
+          height="325"
           color="dark_gray"
           class="pa-7"
           :class="$vuetify.breakpoint.mdOnly ? 'mx-auto' : ''"
@@ -96,7 +96,7 @@
           flat
           tile
           :max-width="$vuetify.breakpoint.smAndDown ? '100%' : 'auto'"
-          height="350"
+          height="325"
           color="dark_gray"
           class="pa-7"
           :class="$vuetify.breakpoint.mdAndDown ? 'mt-10' : 'ml-10'"
