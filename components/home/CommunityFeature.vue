@@ -15,7 +15,7 @@
           :class="$vuetify.breakpoint.mdOnly ? 'mx-auto' : ''"
         >
         <h1 class="display-1 text-capitalize font-weight-medium text-center">
-        $TOKE BURN RAFFLE
+        $TOKE BURN
           </h1>
           <!-- <v-row class="fill-height ma-0" align="center" justify="center">
             <div class="d-flex flex-column text-center">
@@ -34,85 +34,9 @@
               </div>
             </div>
           </v-row> -->
-          <v-row no-gutters class="mt-5">
-          <v-col cols="6" :class="$vuetify.breakpoint.xsOnly ? 'pl-4' : 'pl-7'">
-          <div>
-            <!-- Fed Ape Tickets -->
-            <div class="d-flex align-center">
-              <h1
-                class="lite_gray--text"
-                :class="$vuetify.breakpoint.xsOnly ? 'caption' : 'body-2'"
-              >
-                FED APE TICKETS:
-              </h1>
-              <v-spacer />
-              <h2 class="wallet-font">
-                {{
-                  this.amountFedApeTickets
-                }}
-              </h2>
-            </div>
-          </div>
-        </v-col>
-          <v-col cols="6" :class="$vuetify.breakpoint.xsOnly ? 'pl-4' : 'pl-7'">
-          <div>
-            <!-- Fed Ape Tickets -->
-            <div class="d-flex align-center">
-              <h1
-                class="lite_gray--text"
-                :class="$vuetify.breakpoint.xsOnly ? 'caption' : 'body-2'"
-              >
-                FED APE TICKET COST:
-              </h1>
-              <v-spacer />
-              <h2 class="wallet-font">
-                {{
-                  "250K"
-                }}
-              </h2>
-            </div>
-          </div>
-        </v-col>
-        <v-col cols="6" :class="$vuetify.breakpoint.xsOnly ? 'pl-4' : 'pl-7'">
-          <div>
-            <!-- Highest burner -->
-            <div class="d-flex align-center">
-              <h1
-                class="lite_gray--text"
-                :class="$vuetify.breakpoint.xsOnly ? 'caption' : 'body-2'"
-              >
-                STONED APE TICKETS:
-              </h1>
-              <v-spacer />
-              <h2 class="wallet-font">
-                {{
-                  this.amountStonedApeTickets
-                }}
-              </h2>
-            </div>
-          </div>
-        </v-col>
-        <v-col cols="6" :class="$vuetify.breakpoint.xsOnly ? 'pl-4' : 'pl-7'">
-          <div>
-            <!-- Highest burner -->
-            <div class="d-flex align-center">
-              <h1
-                class="lite_gray--text"
-                :class="$vuetify.breakpoint.xsOnly ? 'caption' : 'body-2'"
-              >
-                STONED APE TICKET COST:
-              </h1>
-              <v-spacer />
-              <h2 class="wallet-font">
-                {{
-                  "50K"
-                }}
-              </h2>
-            </div>
-          </div>
-        </v-col>
-        </v-row>
-              <div class="d-flex flex-row justify-center align-center mt-5">
+          
+         
+      <div class="d-flex flex-row justify-center align-center mt-5">
         <h1 class="body-2 lite_gray--text">AMOUNT: </h1>
         <div class="d-flex align-center">
           <v-btn
@@ -126,7 +50,7 @@
             <img src="/icon/arrow-down.svg" width="14" />
           </v-btn>
           <v-card flat tile color="transparent" width="90">
-            <h1 class="font-size--10 text-center">{{ burnAmount.toString() + "K" }}</h1>
+            <h1 class="font-size--10 text-center">{{ burnAmountString }}</h1>
           </v-card>
           <v-btn
             text
@@ -139,7 +63,14 @@
             <img src="/icon/arrow-up.svg" width="14" />
           </v-btn>
         </div>
+        
       </div>
+      <!-- <div
+        class="d-flex justify-space-between mt-10"
+        :class="$vuetify.breakpoint.mdAndDown ? 'flex-column' : ''"
+      > -->
+      <center><input v-model="message" id="note-input" class="display-1 text-center white--text" placeholder="***Click to add note***"></center>
+      <!-- </div> -->
       <div
         class="d-flex justify-space-between mt-10"
         :class="$vuetify.breakpoint.mdAndDown ? 'flex-column' : ''"
@@ -214,10 +145,17 @@ export default class CommunityFeature extends Vue {
   checkTransactionInterval: NodeJS.Timeout | null = null
   statusInfoInterval: NodeJS.Timeout | null = null
   burnAmount: number = 250
+  burnAmountString: string = "250K"
   highestBurner: string = "-"
   amountStonedApeTickets: string = '-';
   amountFedApeTickets: string = '-';
+  note: string = ""
   
+  // @Watch('message')
+  // onMessageChanged(val:string) {
+  //   this.note = val
+  //   console.log('name': val)
+  // }
 
   @Watch('walletAddressWeb3')
   async onWalletAddressChange(val: string): Promise<void> {
@@ -249,12 +187,32 @@ export default class CommunityFeature extends Vue {
 
 
   incrementBurn(): void {
-    this.burnAmount = 250
+    if(this.burnAmount < 1000) {
+      this.burnAmount += 50
+    } else {
+      this.burnAmount = 1000
+    }
+    this.getBurnString()
+
   }
 
   decrementBurn(): void {
-  this.burnAmount = 50
+    if(this.burnAmount > 50) {
+    this.burnAmount -= 50
+  } else {
+    this.burnAmount = 50
+  }
+
+  this.getBurnString()
 }
+
+  getBurnString(): void {
+    if(this.burnAmount < 1000) {
+      this.burnAmountString = this.burnAmount.toString() + "K"
+    } else {
+      this.burnAmountString = this.burnAmount.toString() + "M"
+    }
+  }
 
 async checkTransactionStatus(txHash: string): Promise<void> {
   const tx = await this.$web3.getWeb3Provider().getTransaction(txHash)
@@ -286,11 +244,14 @@ async burn(): Promise<void> {
   return
   }
   // console.log("Wallet: " + this.walletAddressWeb3)
+  // let note = 
+  let note = (<HTMLInputElement>document.getElementById("note-input")).value;
+  console.log(note)
   this.getInfo()
   try {
     const tx = await this.$web3
       .getBurnGameContract()
-      .functions.burn(ethers.utils.parseEther((this.burnAmount*1000).toString()))
+      .functions.burn(ethers.utils.parseEther((this.burnAmount*1000).toString()), note)
       if (tx.hash.length > 0) {
         this.$toast.info(
           `Burn successfully submitted.\nTx hash: ${tx.hash}`
@@ -348,5 +309,8 @@ async getInfo(): Promise<void> {
 .wallet-font {
   font-size: 15px;
   padding: 10px;
+}
+.text-white input{
+  color: white !important;
 }
 </style>

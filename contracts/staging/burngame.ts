@@ -1,5 +1,5 @@
 export const StagingBurnGameContractAddress =
-  '0x151C36A5A9f60B6eebbE78b6Ca5f89B0F44fC85F'
+  '0x5192308f5C08E528C3079122444A3637ca3e9571'
 export const StagingBurnGameContractABI = [
     {
       inputs: [],
@@ -12,6 +12,11 @@ export const StagingBurnGameContractABI = [
           internalType: 'uint256',
           name: 'amount',
           type: 'uint256'
+        },
+        {
+          internalType: 'string',
+          name: 'note',
+          type: 'string'
         }
       ],
       name: 'burn',
