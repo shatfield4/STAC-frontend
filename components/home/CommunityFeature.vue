@@ -15,7 +15,7 @@
           :class="$vuetify.breakpoint.mdOnly ? 'mx-auto' : ''"
         >
         <h1 class="display-1 text-capitalize font-weight-medium text-center">
-        $TOKE BURN
+        $TOKE PURCHASE
           </h1>
           <!-- <v-row class="fill-height ma-0" align="center" justify="center">
             <div class="d-flex flex-column text-center">
@@ -85,7 +85,7 @@
           :loading="isMinting"
           @click="burn"
         >
-          BURN
+          CONFIRM PAYMENT
         </v-btn>
       </div>
       
@@ -130,7 +130,6 @@ import { ethers, providers } from 'ethers'
 import { Component, Prop, Vue, Watch, namespace } from 'nuxt-property-decorator'
 // const GLOBAL_STORE = namespace('global')
 const WEB3_STORE = namespace('web3')
-
 
 @Component
 export default class CommunityFeature extends Vue {

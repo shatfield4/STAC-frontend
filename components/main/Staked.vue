@@ -753,6 +753,7 @@ export default class Staked extends Vue {
           gasLimit: unstake ? 303373 + (159000 * (this.selectedNFTs.length - 1)) : 172755 + (42000 * (this.selectedNFTs.length - 1))
         })
 
+
       if (tx.hash.length > 0) {
         this.$toast.info(
           `${messagePascal} transaction successfully submitted.\nTx hash: ${tx.hash}`
