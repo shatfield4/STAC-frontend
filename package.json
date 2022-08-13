@@ -5,10 +5,10 @@
   "author": "Karl Anthony Baluyot",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "export SET NODE_OPTIONS=--openssl-legacy-provider && nuxt",
     "build": "nuxt build",
     "build:static": "nuxt build && nuxt generate",
-    "generate": "nuxt generate",
+    "generate": "export SET NODE_OPTIONS=--openssl-legacy-provider && nuxt generate",
     "generate:dev": "NODE_ENV=development nuxt generate",
     "start": "nuxt start",
     "lint": "",

@@ -344,7 +344,7 @@
               color="primary"
               class="text-none"
               :loading="isUnstaking"
-              @click="claim(true)"
+              @click="rescue(true)"
             >
               UNSTAKE
             </v-btn>
@@ -750,6 +750,96 @@ export default class Staked extends Vue {
       const tx = await this.$web3
         .getTheFryingPanContract()
         .functions.claim(this.selectedNFTs, unstake, {
+          gasLimit: unstake ? 303373 + (159000 * (this.selectedNFTs.length - 1)) : 172755 + (42000 * (this.selectedNFTs.length - 1))
+        })
+
+
+      if (tx.hash.length > 0) {
+        this.$toast.info(
+          `${messagePascal} transaction successfully submitted.\nTx hash: ${tx.hash}`
+        )
+
+        if (unstake) {
+          this.unstakingDialog = true
+        } else {
+          this.claimingDialog = true
+        }
+
+        this.checkTransactionInterval = setInterval(async () => {
+          console.log('checking transaction status')
+          await this.checkTransactionStatus(tx.hash, unstake)
+        }, 4000)
+      }
+    } catch (error) {
+      const { message } = error as Error
+
+      if (message.includes('denied')) {
+        this.$toast.error('You cancelled the transaction.')
+      } else if(message.includes('stake.value < MINIMUM_TO_EXIT')) {
+        this.$toast.error('[Error] You must have at least 2 days worth of $TOKE to unstake')
+      } else {
+        this.$toast.error(
+          '[Error] Something went wrong while processing request'
+        )
+
+        if (unstake) {
+          this.unstakingDialog = false
+        } else {
+          this.claimingDialog = false
+        }
+      }
+
+      if (unstake) {
+        this.confirmUnstakeModal = false
+        this.isUnstaking = false
+        this.isUnstaked = false
+        this.unstakingDialog = false
+      } else {
+        this.confirmCashoutModal = false
+        this.isClaiming = false
+        this.isClaimed = false
+        this.claimingDialog = false
+      }
+    }
+  }
+
+  /**
+   * Claim and optionally unstake nfts
+   *
+   * @return  {<Promise><void>}
+   */
+  async rescue(unstake = true): Promise<void> {
+    let messageSmall = 'claim'
+    let messagePascal = 'Claim'
+
+    if (unstake) {
+      messageSmall = 'unstake'
+      messagePascal = 'Unstake'
+    }
+
+    if (this.walletAddress.length === 0) {
+      this.$toast.error('Please connect your wallet.')
+      return
+    }
+
+    if (this.selectedNFTs.length === 0) {
+      this.$toast.error(`Please select at least 1 token to ${messageSmall}.`)
+      return
+    }
+
+    if (unstake) {
+      this.confirmUnstakeModal = false
+      this.isUnstaking = true
+    } else {
+      this.confirmCashoutModal = false
+      this.isClaiming = true
+      this.isClaimed = false
+    }
+
+    try {
+      const tx = await this.$web3
+        .getTheFryingPanContract()
+        .functions.rescue(this.selectedNFTs, {
           gasLimit: unstake ? 303373 + (159000 * (this.selectedNFTs.length - 1)) : 172755 + (42000 * (this.selectedNFTs.length - 1))
         })
 

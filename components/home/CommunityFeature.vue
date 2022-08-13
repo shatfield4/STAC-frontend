@@ -101,23 +101,51 @@
           class="pa-7"
           :class="$vuetify.breakpoint.mdAndDown ? 'mt-10' : 'ml-10'"
         >
-          <v-row class="fill-height ma-0" align="center" justify="center">
-            <div class="d-flex flex-column text-center">
-              <div class="mx-auto">
-                <v-img src="/icon/locked-icon.png" max-width="69" height="86">
-                </v-img>
-              </div>
-              <div>
-                <h1 class="title montserrat--font font-weight-bold">LOCKED</h1>
-              </div>
-              <div>
-                <h2 class="body-1 font-weight-light">
-                  Community Selected Feature
-                  <span class="primary--text"> #2 </span>
-                </h2>
-              </div>
-            </div>
-          </v-row>
+        <h1 class="display-1 text-capitalize font-weight-medium text-center">
+        V2 MIGRATION (COMING SOON)
+        </h1>
+        
+        <h1
+          class="lite_gray--text"
+          :class="$vuetify.breakpoint.xsOnly ? 'caption' : 'body-2'"
+          style="padding-top: 40px"
+        >
+        <center>In order to progress with the next stages of the game, you will be required to unstake all apes and migrate them to our v2 contract.</center>
+        </h1>
+        <br><br>
+      <div
+      class="d-flex justify-space-between"
+      :class="$vuetify.breakpoint.mdAndDown ? 'flex-column mt-4' : 'mt-5'"
+    >
+      <v-btn
+        tile
+        depressed
+        :block="$vuetify.breakpoint.mdAndDown"
+        :width="$vuetify.breakpoint.xsOnly ? '' : 320"
+        height="40"
+        color="primary"
+        :class="$vuetify.breakpoint.mdAndDown ? 'mt-3' : ''"
+        :loading="isUnstaking"
+        @click="confirmUnstakeModal = true"
+        :disabled="true"
+      >
+        UNSTAKE ALL
+      </v-btn>
+      <v-btn
+        tile
+        depressed
+        :block="$vuetify.breakpoint.mdAndDown"
+        :width="$vuetify.breakpoint.xsOnly ? '' : 320"
+        height="40"
+        color="primary"
+        :class="$vuetify.breakpoint.mdAndDown ? 'mt-3' : ''"
+        :loading="isClaiming"
+        @click="confirmCashoutModal = true"
+        :disabled="true"
+      >
+        MIGRATE TO V2
+      </v-btn>
+    </div>
           
           
         </v-card>
@@ -131,6 +159,11 @@ import { ethers, providers } from 'ethers'
 import { Component, Prop, Vue, Watch, namespace } from 'nuxt-property-decorator'
 // const GLOBAL_STORE = namespace('global')
 const WEB3_STORE = namespace('web3')
+
+interface NFTItemInterface {
+  tokenId: number
+  image: string
+}
 
 @Component
 export default class CommunityFeature extends Vue {
@@ -150,6 +183,8 @@ export default class CommunityFeature extends Vue {
   amountStonedApeTickets: string = '-';
   amountFedApeTickets: string = '-';
   note: string = ""
+  unstakedNFTs: NFTItemInterface[] = []
+  signerAddress: string = ''
   
   // @Watch('message')
   // onMessageChanged(val:string) {
@@ -162,9 +197,11 @@ export default class CommunityFeature extends Vue {
     if (val.length > 0) {
       await new Promise(resolve => setTimeout(resolve, 5000));
       this.getInfo()
-      this.statusInfoInterval = setInterval(this.getInfo, 15000)
+      this.statusInfoInterval = setInterval(this.getInfo, 15000);
+      this.getUnstakedTokens();
     } else {
       this.getInfo()
+      this.unstakedNFTs = []
     }
   }
   async mounted() {
@@ -278,6 +315,37 @@ async burn(): Promise<void> {
     }
   }
 }
+
+/**
+   * Get owned unstaked tokens
+   *
+   * @return  {Promise<void>}
+   */
+  async getUnstakedTokens(): Promise<void> {
+    /// get signer
+    const signer = this.$web3.getWeb3Provider().getSigner()
+    this.signerAddress = await signer.getAddress()
+
+    // get owned unstaked tokens
+    const unstakedTokens: ethers.BigNumber[] = await this.$web3
+      .getBaconContract(true)
+      .tokensOfOwner(this.signerAddress)
+
+    this.unstakedNFTs = []
+
+    unstakedTokens.forEach((token) => {
+      const tokenId = token.toNumber()
+      const image = `${this.$config.apiUrl}/${tokenId}.png`
+
+      this.unstakedNFTs.push({
+        tokenId,
+        image,
+      })
+    })
+
+    // sort ascending token id
+    this.unstakedNFTs.sort((a, b) => a.tokenId - b.tokenId)
+  }
 
 async getInfo(): Promise<void> {
   const fedApeTicketAmountsFetch: string = await this.$web3.
