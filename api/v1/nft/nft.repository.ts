@@ -1,4 +1,5 @@
 import { AxiosInstance, AxiosResponse, AxiosError } from 'axios'
+import axios from "axios";
 import { GetGameStatusResponse, GetStakedTokensResponse } from './nft.types'
 import {
   APIResponseInterface,
@@ -7,7 +8,7 @@ import {
 
 const VERSION: string = `/v1`
 
-export default ($axios: AxiosInstance) => ({
+export default ($axios: AxiosInstance, $axios2: AxiosInstance) => ({
   /**
    * Get staked tokens
    *
@@ -28,6 +29,35 @@ export default ($axios: AxiosInstance) => ({
         ) => {
           const { data } = response
 
+          return data
+        }
+      )
+      .catch((error: AxiosError<ErrorAPIResponseInterface>) => {
+        const { response } = error
+        throw response?.data !== undefined ? response.data : {}
+      })
+  },
+
+  /**
+   * Get staked tokens V2
+   *
+   * @param {ownerAddress} string
+   *
+   * @return  {Promise}
+   */
+   GetStakedTokensV2(
+    ownerAddress: string
+  ): Promise<APIResponseInterface<GetStakedTokensResponse[]>> {
+    return axios.create({
+      baseURL: "https://apiv2.stonedapeclub.com"
+    }).get(`${VERSION}/nft/staked-tokens/${ownerAddress}`)
+      .then(
+        (
+          response: AxiosResponse<
+            APIResponseInterface<GetStakedTokensResponse[]>
+          >
+        ) => {
+          const { data } = response
           return data
         }
       )

@@ -5,10 +5,12 @@ export default (ctx: Context, inject: any): void => {
   let baconContract: ethers.Contract
   let greaseContract: ethers.Contract
   let theFryingPanContract: ethers.Contract
+  let theFryingPanV2Contract: ethers.Contract
   let burnGameContract: ethers.Contract
   let baconJsonRPCContract: ethers.Contract
   let greaseJsonRPCContract: ethers.Contract
   let theFryingPanJsonRPCContract: ethers.Contract
+  let theFryingPanV2JsonRPCContract: ethers.Contract
   let burnGameJsonRPCContract: ethers.Contract
   let web3: ethers.providers.Web3Provider
   let web3JsonRPC: ethers.providers.JsonRpcProvider
@@ -59,6 +61,16 @@ export default (ctx: Context, inject: any): void => {
         ? theFryingPanJsonRPCContract
         : theFryingPanContract
     },
+      /**
+     * Get the frying pan contract instance
+     *
+     * @var {ethers.Contract}
+     */
+       getTheFryingPanContractV2(jsonRPCProvider = false): ethers.Contract {
+        return jsonRPCProvider
+          ? theFryingPanV2JsonRPCContract
+          : theFryingPanV2Contract
+      },
     /**
      * Initialize web3 provider
      *
@@ -146,5 +158,34 @@ export default (ctx: Context, inject: any): void => {
         )
       }
     },
+
+    /**
+     * Create new the frying pan contract connection
+     *
+     * @return  {ethers.Contract}
+     */
+    initTheFryingPanContractV2(
+      address: string,
+      abi: ethers.ContractInterface,
+      web3Signer: ethers.Signer,
+      jsonRPCSigner: ethers.Signer
+    ): void {
+      
+      // try {
+
+      // } catch(err) {
+      //   alert(err)
+      // }
+      theFryingPanV2Contract = new ethers.Contract(address, abi, web3Signer)
+
+      if (jsonRPCSigner !== undefined) {
+        theFryingPanV2JsonRPCContract = new ethers.Contract(
+          address,
+          abi,
+          jsonRPCSigner
+        )
+      }
+    },
+
   })
 }

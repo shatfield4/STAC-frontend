@@ -86,7 +86,6 @@
       color="primary"
       class="mt-5"
       :loading="isStaking"
-      disabled="true"
       @click="confirmStakeDialog = true"
     >
       STAKE
@@ -365,7 +364,7 @@ export default class Unstaked extends Vue {
 
     try {
       const tx = await this.$web3
-        .getTheFryingPanContract()
+        .getTheFryingPanContractV2()
         .functions.stake(this.selectedNFTs)
 
       if (tx.hash.length > 0) {

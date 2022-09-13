@@ -110,7 +110,7 @@
           :class="$vuetify.breakpoint.xsOnly ? 'caption' : 'body-2'"
           style="padding-top: 40px"
         >
-        <center>In order to progress with the next stages of the game, you <strong>unstake all of your apes</strong>, then enter STAC V2.</center>
+        <center>Ensure all of your apes are unstaked from the V1 contract before using STAC V2.</center>
         </h1>
         <br><br>
       <div
@@ -138,8 +138,9 @@
         color="primary"
         :class="$vuetify.breakpoint.mdAndDown ? 'mt-5' : ''"
         href="https://stonedapeclubgame.com/v2"
+        disabled="false"
       >
-        ENTER STAC V2
+        STAC V2
       </v-btn>
     </div>
           
@@ -162,7 +163,7 @@ interface NFTItemInterface {
 }
 
 @Component
-export default class CommunityFeature extends Vue {
+export default class CommunityFeatureS2 extends Vue {
   // @Prop({ default: '' }) walletAddress!: string
   // @GLOBAL_STORE.Action('setUnstakedListLastTimestamp')
   // @GLOBAL_STORE.State('stakedListLastTimestamp')

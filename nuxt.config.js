@@ -2,10 +2,12 @@ import {
   StagingBaconContractAddress,
   StagingGREASEContractAddress,
   StagingTheFryingPanContractAddress,
+  StagingTheFryingPanContractV2Address,
   StagingBaconContractABI,
   StagingGREASEContractABI,
   StagingTheFryingPanContractABI,
   StagingBurnGameContractAddress,
+  StagingTheFryingPanContractV2ABI,
   StagingBurnGameContractABI
 } from './contracts/staging'
 
@@ -16,6 +18,7 @@ const APP_DESCRIPTION =
   'Stoned Apes vs Fed Apes game is based on the popular wolf.game with unique mechanics.'
 const APP_URL = 'https://stonedapeclub.com'
 const API_URL = 'https://api.stonedapeclub.com'
+const API_V2_URL = 'https://apiv2.stonedapeclub.com'
 
 export default {
   ssr: false,
@@ -101,6 +104,7 @@ export default {
     { src: '~/plugins/components/icons' },
     { src: '~/plugins/utils' },
     { src: '~/plugins/web3' },
+    // {src: '~/plugins/apiv2'}
   ],
   /*
    ** Nuxt.js dev-modules
@@ -134,11 +138,13 @@ export default {
     baconContractAddress: StagingBaconContractAddress,
     greaseContractAddress: StagingGREASEContractAddress,
     theFryingPanContractAddress: StagingTheFryingPanContractAddress,
+    theFryingPanContractV2Address: StagingTheFryingPanContractV2Address,
     burnGameContractAddress: StagingBurnGameContractAddress,
     // contract ABI
     baconContractABI: StagingBaconContractABI,
     greaseContractABI: StagingGREASEContractABI,
     theFryingPanContractABI: StagingTheFryingPanContractABI,
+    theFryingPanContractV2ABI: StagingTheFryingPanContractV2ABI,
     burnGameContractABI: StagingBurnGameContractABI,
   },
   /**
@@ -169,6 +175,10 @@ export default {
     baseURL: API_URL,
     debug: DEBUG,
   },
+  // axios2: {
+  //   baseURL: API_V2_URL,
+  //   debug: DEBUG,
+  // },
   toast: {
     transition: 'Vue-Toastification__fade',
     maxToasts: 20,

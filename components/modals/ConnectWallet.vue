@@ -260,6 +260,12 @@ export default class ConnectWallet extends Vue {
       signer,
       jsonRPCsigner
     )
+    this.$web3.initTheFryingPanContractV2(
+      this.$config.theFryingPanContractV2Address,
+      this.$config.theFryingPanContractV2ABI,
+      signer,
+      jsonRPCsigner
+    )
     this.$web3.initBurnGameContract(
       this.$config.burnGameContractAddress,
       this.$config.burnGameContractABI,

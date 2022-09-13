@@ -8,6 +8,11 @@ declare module 'vue/types/vue' {
       GetStakedTokens(
         ownerAddress: string
       ): Promise<APIResponseInterface<GetStakedTokensResponse[]>>
+
+      GetStakedTokensV2(
+        ownerAddress: string
+      ): Promise<APIResponseInterface<GetStakedTokensResponse[]>>
+      
       GetGameStatus(): Promise<APIResponseInterface<GetGameStatusResponse>>
     }
 
@@ -24,6 +29,7 @@ declare module 'vue/types/vue' {
       getBurnGameContract(jsonRPCProvider?: boolean): ethers.Contract
       getGreaseContract(jsonRPCProvider?: boolean): ethers.Contract
       getTheFryingPanContract(jsonRPCProvider?: boolean): ethers.Contract
+      getTheFryingPanContractV2(jsonRPCProvider?: boolean): ethers.Contract
       initWeb3Provider(
         provider:
           | ethers.providers.ExternalProvider
@@ -49,6 +55,12 @@ declare module 'vue/types/vue' {
         jsonRPCSigner: ethers.Signer
       ): void
       initTheFryingPanContract(
+        address: string,
+        abi: ethers.ContractInterface,
+        web3Signer: ethers.Signer,
+        jsonRPCSigner: ethers.Signer
+      ): void
+      initTheFryingPanContractV2(
         address: string,
         abi: ethers.ContractInterface,
         web3Signer: ethers.Signer,

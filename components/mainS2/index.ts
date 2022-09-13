@@ -5,4 +5,5 @@ import Unstaked from './Unstaked.vue'
 import CommunityFeature from '../home/CommunityFeature.vue'
 import CommunityFeatureS2 from '../home/CommunityFeatureS2.vue'
 
+
 export { GameStatus, Minting, Staked, Unstaked, CommunityFeature, CommunityFeatureS2}
