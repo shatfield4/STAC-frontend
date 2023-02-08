@@ -1,4 +1,4 @@
-# Grandtheftbacon Game Webapp
+# STAC Game Webapp
 
 &nbsp;
 
