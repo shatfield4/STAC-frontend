@@ -11,7 +11,7 @@ git clone git@github.com/GrandTheftBacon/webapp-grandtheftbacon-game
 ```
 
 ```
-cd webapp-grandtheftbacon-game/
+cd STAC-frontend/
 ```
 
 ```
